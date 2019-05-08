@@ -1,0 +1,130 @@
+@import '../../../styles/_variables.scss';
+
+.translations-list {
+  .translation {
+    background-color: $white;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+
+      .key {
+        color: $darkGrey;
+        font-size: 12px;
+      }
+
+      .edit-btn {
+        color: $blue;
+        padding: 0;
+        background: transparent;
+        line-height: 0;
+
+        .icon {
+          font-size: 20px;
+        }
+      }
+    }
+
+    &-body {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 60px;
+
+      .left-column {
+        position: relative;
+
+        &:after {
+          content: '\e903';
+          font-family: 'spone';
+          position: absolute;
+          top: 40px;
+          right: -47px;
+          font-size: 31px;
+          color: $blue;
+          line-height: 0;
+        }
+      }
+
+      .right-column {
+        .SPOTextareaContainer {
+          border: 1px solid $grey;
+          width: 100%;
+
+          .SPOTextarea {
+            margin: 0;
+          }
+
+          textarea {
+            padding: 3px;
+
+            &::placeholder {
+              color: $lightGrey;
+            }
+          }
+        }
+      }
+
+      .reference {
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 5px;
+        color: $darkGrey;
+      }
+    }
+  }
+
+  .floating-btn {
+    position: fixed;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 200px;
+    border: 1px solid $blue;
+    background-color: $white;
+    padding: 8px;
+
+    .btn {
+      font-size: 10px;
+      line-height: 12px;
+      padding: 6px 9px 4px;
+      text-transform: uppercase;
+      width: 44px;
+      height: 44px;
+
+      .icon {
+        font-size: 14px;
+        margin-bottom: 8px;
+        display: block;
+        font-weight: 600;
+      }
+
+      &-discard {
+        border: none;
+        padding-left: 0;
+        padding-right: 0;
+
+        .icon {
+          margin-bottom: 10px;
+        }
+      }
+    }
+
+    .counters {
+      font-size: 12px;
+    }
+  }
+}

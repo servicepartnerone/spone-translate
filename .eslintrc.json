@@ -1,0 +1,38 @@
+{
+  "extends": "react-app",
+  "rules": {
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "no-empty": ["error", { "allowEmptyCatch": true }],
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "comma-dangle": ["error", "never"],
+    "max-len": [
+      "error",
+      {
+        "code": 120,
+        "comments": 100,
+        "ignoreRegExpLiterals": true,
+        "ignoreComments": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreTrailingComments": true
+      }
+    ],
+    "arrow-parens": ["error", "as-needed", { "requireForBlockBody": false }],
+    "flowtype/define-flow-type": [1],
+    "flowtype/use-flow-type": [1],
+    "react/jsx-indent": ["error", 2],
+    "react/jsx-indent-props": ["error", 2],
+    "react/jsx-filename-extension": [2, { "extensions": [".jsx", ".js"] }],
+    "react/forbid-prop-types": ["off"],
+    "react/no-danger": ["off"],
+    "react/require-default-props": ["off"],
+    "react/prop-types": [0, { "ignore": "children" }],
+    "react/destructuring-assignment": [0, "never"],
+    "jsx-a11y/label-has-for": "off",
+    "jsx-a11y/label-has-associated-control": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/mouse-events-have-key-events": 0,
+    "react/jsx-boolean-value": ["error", "never", { "always": ["value"] }],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+  }
+}

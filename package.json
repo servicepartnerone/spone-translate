@@ -1,0 +1,39 @@
+{
+  "name": "react-fullstack-basic",
+  "version": "1.0.0",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-react-app": "^4.0.0",
+    "eslint-plugin-flowtype": "^3.7.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.13.0",
+    "react-scripts": "3.0.0"
+  },
+  "dependencies": {
+    "@spone/ui": "https://05b0b920e16499b46987a67c4e4fdcfc5cd7b583@github.com/servicepartnerone/spone-ui",
+    "apollo-boost": "0.3.1",
+    "formik": "^1.5.4",
+    "graphql": "14.2.1",
+    "node-sass": "^4.12.0",
+    "react": "16.8.6",
+    "react-apollo": "2.5.5",
+    "react-dom": "16.8.6",
+    "react-modal": "3.8.1",
+    "react-router-dom": "5.0.0",
+    "yup": "^0.27.0"
+  },
+  "scripts": {
+    "components": "yarn upgrade @spone/ui",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

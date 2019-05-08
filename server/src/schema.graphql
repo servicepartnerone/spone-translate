@@ -1,0 +1,64 @@
+type Query {
+  users: [User!]!
+  projects: [Project!]!
+
+  user(id: ID!): User
+  project(id: ID!): Project
+}
+
+type Mutation {
+  createUser(email: String, first_name: String!): User!
+  createProject(project_name: String!): Project!
+  createLanguage(language: String!): Language!
+  createNamespace(namespace_name: String!): Namespace!
+  createTranslation(key: String!, value: String!): Translation!
+}
+
+type User {
+  id: ID!
+  createdAt: Date!
+  updatedAt: Date!
+  email: String!
+  first_name: String
+  projects: [Project!]!
+}
+
+type Project {
+  id: ID!
+  createdAt: Date!
+  project_name: String!
+  languages: [Language!]!
+}
+
+type Language {
+  id: ID!
+  createdAt: Date!
+  language: String!
+  namespaces: [Namespace!]!
+}
+
+type Namespace {
+  id: ID!
+  createdAt: Date!
+  namespace_name: String!
+  translations: [Translation!]!
+}
+
+type Translation {
+  id: ID!
+  createdAt: Date!
+  updatedAt: Date!
+  key: String!
+  value: String!
+  owner: Namespace!
+  status: Status!
+}
+
+enum Status {
+  ACTIVE
+  DRAFT
+  UPDATED
+  REMOVED
+}
+
+scalar Date

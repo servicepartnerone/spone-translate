@@ -1,0 +1,15 @@
+@import '../../../styles/_variables.scss';
+
+.main-header {
+  background-color: $blue;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 20px;
+
+  .btn-settings {
+    color: $white;
+    font-size: 30px;
+    line-height: 0;
+  }
+}

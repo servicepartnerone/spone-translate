@@ -1,0 +1,27 @@
+@import '../../styles/_variables.scss';
+
+.project-details-page {
+  .page-header {
+    .date {
+      font-size: 12px;
+      align-self: flex-end;
+      margin-bottom: 12px;
+      margin-left: 10px;
+    }
+
+    .add-btn {
+      font-size: 10px;
+      line-height: 12px;
+      padding: 9px 10px 7px;
+      margin-right: 2px;
+      margin-left: 2px;
+
+      .icon {
+        font-size: 14px;
+        margin-bottom: 8px;
+        display: block;
+        font-weight: 600;
+      }
+    }
+  }
+}

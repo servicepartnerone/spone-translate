@@ -1,0 +1,24 @@
+@import '../../../../styles/_variables.scss';
+
+.projects-form {
+  .projects-list {
+    padding: 0;
+  }
+
+  .project {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid $grey;
+    padding: 15px 10px;
+    transition: $hoverTransition;
+
+    &:hover {
+      background-color: $superLightGrey;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}

@@ -1,0 +1,34 @@
+@import '../../../../styles/_variables.scss';
+
+.segment-form {
+  .segment-list {
+    padding: 0;
+  }
+
+  .segment {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid $grey;
+    padding: 15px 10px 20px;
+    position: relative;
+    transition: $hoverTransition;
+
+    &:hover {
+      background-color: $superLightGrey;
+    }
+
+    .line {
+      height: 3px;
+      background-color: $green;
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      max-width: calc(100% - 20px);
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}

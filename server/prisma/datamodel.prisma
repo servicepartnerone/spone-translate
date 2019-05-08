@@ -1,0 +1,46 @@
+type User {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  email: String! @unique
+  first_name: String
+  projects: [Project!]!
+}
+
+type Project {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  project_name: String! @unique
+  languages: [Language!]!
+}
+
+type Language {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  language: String! @unique
+  namespaces: [Namespace!]!
+}
+
+type Namespace {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  namespace_name: String! @unique
+  translations: [Translation!]!
+}
+
+type Translation {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  key: String! @unique
+  value: String!
+  owner: Namespace! @relation(link: INLINE)
+  status: Status! @default(value: ACTIVE)
+}
+
+enum Status {
+  ACTIVE
+  DRAFT
+  UPDATED
+  REMOVED
+}
