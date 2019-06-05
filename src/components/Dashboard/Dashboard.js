@@ -2,11 +2,11 @@ import React from 'react';
 import { graphql } from 'react-apollo';
 import { gql } from 'apollo-boost';
 
-import ProjectsList from './components/ProjectsList/ProjectsList';
+import Projects from 'components/Projects/Projects';
 
 import './Dashboard.scss';
 
-const Dashboard = ({ projectsQuery }) => (
+const Dashboard = ({ projectsQuery: { projects } }) => (
   <div className="dashboard-page">
     <div className="page-header">
       <h1 className="page-title">
@@ -16,13 +16,10 @@ const Dashboard = ({ projectsQuery }) => (
     </div>
 
     <div className="page-content">
-      {projectsQuery.error && <div>Error...</div>}
-      {projectsQuery.loading && <div>Ladoing...</div>}
-
-      {projectsQuery.projects && (
+      {projects && (
         <div className="left-column">
           <div className="section-projects">
-            <ProjectsList projects={projectsQuery.projects} />
+            <Projects projects={projects} />
           </div>
         </div>
       )}
@@ -34,7 +31,7 @@ const GET_PROJECTS = gql`
   query ProjectsQuery {
     projects {
       id
-      project_name
+      name
     }
   }
 `;

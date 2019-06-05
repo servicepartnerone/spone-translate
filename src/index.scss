@@ -10,6 +10,13 @@ body {
   background-color: $superLightGrey;
 }
 
+html,
+body,
+#root,
+.page-content {
+  height: 100%;
+}
+
 *,
 *:before,
 *:after {
@@ -30,13 +37,19 @@ button {
   outline: none;
 }
 
+#root {
+  display: grid;
+  grid-template-rows: 58px auto;
+}
+
 .content {
   padding: 20px;
 }
 
 .page-header {
   display: flex;
-  align-items: center;
+  // align-items: center;
+  align-content: center;
   margin-bottom: 10px;
 
   .back-btn {
@@ -44,6 +57,8 @@ button {
     line-height: 12px;
     padding: 9px 10px 7px;
     margin-right: 2px;
+    min-width: 0;
+    border-radius: 0;
 
     .icon {
       font-size: 14px;
@@ -90,6 +105,8 @@ button {
       font-size: 10px;
       line-height: 10px;
       padding: 7px 12px;
+      min-width: 0;
+      border-radius: 0;
 
       .icon {
         font-size: 15px;
@@ -113,13 +130,10 @@ button {
     display: flex;
     align-items: center;
     padding: 10px;
+    justify-content: center;
 
     &.one-right {
       justify-content: flex-end;
     }
   }
-}
-
-.SPOInputContainer > label {
-  transform: translate(0, 22px) scale(1);
 }

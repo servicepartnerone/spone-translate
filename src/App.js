@@ -1,30 +1,81 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-import Dashboard from './components/Dashboard/Dashboard';
-import Project from './components/Projects/Project';
-import ProjectDetails from './components/ProjectDetails/ProjectDetails';
-// import FeedPage from './components/FeedPage';
-import DraftsPage from './components/DraftsPage';
-import CreatePage from './components/CreatePage';
-import DetailPage from './components/DetailPage';
-import Settings from './components/Settings/Settings';
-import Layout from './components/Common/Layout/Layout';
+import { AUTH_TOKEN } from './constants';
+import { isTokenExpired } from './utils/jwtHelper';
+import Dashboard from 'components/Dashboard/Dashboard';
+import Project from 'components/Projects/components/Project/Project';
+// import ProjectDetails from 'components/ProjectDetails/ProjectDetails';
+import Settings from 'components/Settings/Settings';
+import Layout from 'components/Common/Layout/Layout';
+import Login from 'components/Login/Login';
+import PageNotFound from 'components/PageNotFound/PageNotFound';
 
-const App = () => (
-  <>
-    <Layout>
-      <Switch>
-        <Route exact path="/" component={Dashboard} />
-        <Route path="/projects/:id" exact component={Project} />
-        <Route path="/projects/:id/:language/:namespace" exact component={ProjectDetails} />
-        <Route path="/drafts" component={DraftsPage} />
-        <Route path="/create" component={CreatePage} />
-        <Route path="/settings" component={Settings} />
-        <Route path="/post/:id" component={DetailPage} />
-      </Switch>
-    </Layout>
-  </>
-);
+import 'react-toastify/dist/ReactToastify.min.css';
+
+// Configure toast container
+toast.configure({
+  autoClose: 5000,
+  draggable: false,
+  hideProgressBar: true,
+  pauseOnHover: false
+});
+
+const ProtectedRoute = ({ component: Component, token, ...rest }) => {
+  return token ? <Route {...rest} render={matchProps => <Component {...matchProps} />} /> : <Redirect to="/login" />;
+};
+
+const App = ({ token: initialToken }) => {
+  const [token, setToken] = useState(initialToken);
+
+  const bootStrapData = () => {
+    try {
+      const token = localStorage.getItem(AUTH_TOKEN);
+      if (token !== null && token !== undefined) {
+        const expired = isTokenExpired(token);
+        if (!expired) {
+          setToken(token);
+        } else {
+          localStorage.removeItem(AUTH_TOKEN);
+          setToken(null);
+        }
+      }
+    } catch (e) {
+      console.log('Token validation error');
+    }
+  };
+
+  useEffect(() => {
+    bootStrapData();
+  }, []);
+
+  const refreshTokenFn = (data = {}) => {
+    const token = data[AUTH_TOKEN];
+
+    if (token) {
+      localStorage.setItem(AUTH_TOKEN, token);
+    } else {
+      localStorage.removeItem(AUTH_TOKEN);
+    }
+
+    setToken(data[AUTH_TOKEN]);
+  };
+
+  return (
+    <>
+      <Layout>
+        <Switch>
+          <ProtectedRoute exact path="/" component={Dashboard} token={token} />
+          <ProtectedRoute path="/projects/:id" exact component={Project} token={token} />
+          {/* <ProtectedRoute path="/projects/:id/:language/:namespace" exact component={ProjectDetails} token={token} /> */}
+          <ProtectedRoute path="/settings" component={Settings} token={token} />
+          <Route path="/login" render={props => <Login refreshTokenFn={refreshTokenFn} />} />
+          <Route component={PageNotFound} />
+        </Switch>
+      </Layout>
+    </>
+  );
+};
 
 export default App;
