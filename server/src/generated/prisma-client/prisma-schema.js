@@ -27,13 +27,10 @@ type BatchPayload {
   count: Long!
 }
 
-scalar DateTime
-
 type Language {
   id: ID!
-  createdAt: DateTime!
-  language: String!
-  namespaces(where: NamespaceWhereInput, orderBy: NamespaceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Namespace!]
+  name: String!
+  project: Project!
 }
 
 type LanguageConnection {
@@ -44,13 +41,18 @@ type LanguageConnection {
 
 input LanguageCreateInput {
   id: ID
-  language: String!
-  namespaces: NamespaceCreateManyInput
+  name: String!
+  project: ProjectCreateOneWithoutLanguagesInput!
 }
 
-input LanguageCreateManyInput {
-  create: [LanguageCreateInput!]
+input LanguageCreateManyWithoutProjectInput {
+  create: [LanguageCreateWithoutProjectInput!]
   connect: [LanguageWhereUniqueInput!]
+}
+
+input LanguageCreateWithoutProjectInput {
+  id: ID
+  name: String!
 }
 
 type LanguageEdge {
@@ -61,16 +63,13 @@ type LanguageEdge {
 enum LanguageOrderByInput {
   id_ASC
   id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  language_ASC
-  language_DESC
+  name_ASC
+  name_DESC
 }
 
 type LanguagePreviousValues {
   id: ID!
-  createdAt: DateTime!
-  language: String!
+  name: String!
 }
 
 input LanguageScalarWhereInput {
@@ -88,28 +87,20 @@ input LanguageScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  language: String
-  language_not: String
-  language_in: [String!]
-  language_not_in: [String!]
-  language_lt: String
-  language_lte: String
-  language_gt: String
-  language_gte: String
-  language_contains: String
-  language_not_contains: String
-  language_starts_with: String
-  language_not_starts_with: String
-  language_ends_with: String
-  language_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
   AND: [LanguageScalarWhereInput!]
   OR: [LanguageScalarWhereInput!]
   NOT: [LanguageScalarWhereInput!]
@@ -133,34 +124,29 @@ input LanguageSubscriptionWhereInput {
   NOT: [LanguageSubscriptionWhereInput!]
 }
 
-input LanguageUpdateDataInput {
-  language: String
-  namespaces: NamespaceUpdateManyInput
-}
-
 input LanguageUpdateInput {
-  language: String
-  namespaces: NamespaceUpdateManyInput
+  name: String
+  project: ProjectUpdateOneRequiredWithoutLanguagesInput
 }
 
 input LanguageUpdateManyDataInput {
-  language: String
+  name: String
 }
 
-input LanguageUpdateManyInput {
-  create: [LanguageCreateInput!]
-  update: [LanguageUpdateWithWhereUniqueNestedInput!]
-  upsert: [LanguageUpsertWithWhereUniqueNestedInput!]
+input LanguageUpdateManyMutationInput {
+  name: String
+}
+
+input LanguageUpdateManyWithoutProjectInput {
+  create: [LanguageCreateWithoutProjectInput!]
   delete: [LanguageWhereUniqueInput!]
   connect: [LanguageWhereUniqueInput!]
   set: [LanguageWhereUniqueInput!]
   disconnect: [LanguageWhereUniqueInput!]
+  update: [LanguageUpdateWithWhereUniqueWithoutProjectInput!]
+  upsert: [LanguageUpsertWithWhereUniqueWithoutProjectInput!]
   deleteMany: [LanguageScalarWhereInput!]
   updateMany: [LanguageUpdateManyWithWhereNestedInput!]
-}
-
-input LanguageUpdateManyMutationInput {
-  language: String
 }
 
 input LanguageUpdateManyWithWhereNestedInput {
@@ -168,15 +154,19 @@ input LanguageUpdateManyWithWhereNestedInput {
   data: LanguageUpdateManyDataInput!
 }
 
-input LanguageUpdateWithWhereUniqueNestedInput {
-  where: LanguageWhereUniqueInput!
-  data: LanguageUpdateDataInput!
+input LanguageUpdateWithoutProjectDataInput {
+  name: String
 }
 
-input LanguageUpsertWithWhereUniqueNestedInput {
+input LanguageUpdateWithWhereUniqueWithoutProjectInput {
   where: LanguageWhereUniqueInput!
-  update: LanguageUpdateDataInput!
-  create: LanguageCreateInput!
+  data: LanguageUpdateWithoutProjectDataInput!
+}
+
+input LanguageUpsertWithWhereUniqueWithoutProjectInput {
+  where: LanguageWhereUniqueInput!
+  update: LanguageUpdateWithoutProjectDataInput!
+  create: LanguageCreateWithoutProjectInput!
 }
 
 input LanguageWhereInput {
@@ -194,31 +184,21 @@ input LanguageWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  language: String
-  language_not: String
-  language_in: [String!]
-  language_not_in: [String!]
-  language_lt: String
-  language_lte: String
-  language_gt: String
-  language_gte: String
-  language_contains: String
-  language_not_contains: String
-  language_starts_with: String
-  language_not_starts_with: String
-  language_ends_with: String
-  language_not_ends_with: String
-  namespaces_every: NamespaceWhereInput
-  namespaces_some: NamespaceWhereInput
-  namespaces_none: NamespaceWhereInput
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  project: ProjectWhereInput
   AND: [LanguageWhereInput!]
   OR: [LanguageWhereInput!]
   NOT: [LanguageWhereInput!]
@@ -226,7 +206,7 @@ input LanguageWhereInput {
 
 input LanguageWhereUniqueInput {
   id: ID
-  language: String
+  name: String
 }
 
 scalar Long
@@ -272,8 +252,7 @@ enum MutationType {
 
 type Namespace {
   id: ID!
-  createdAt: DateTime!
-  namespace_name: String!
+  name: String!
   translations(where: TranslationWhereInput, orderBy: TranslationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Translation!]
 }
 
@@ -285,13 +264,8 @@ type NamespaceConnection {
 
 input NamespaceCreateInput {
   id: ID
-  namespace_name: String!
+  name: String!
   translations: TranslationCreateManyWithoutOwnerInput
-}
-
-input NamespaceCreateManyInput {
-  create: [NamespaceCreateInput!]
-  connect: [NamespaceWhereUniqueInput!]
 }
 
 input NamespaceCreateOneWithoutTranslationsInput {
@@ -301,7 +275,7 @@ input NamespaceCreateOneWithoutTranslationsInput {
 
 input NamespaceCreateWithoutTranslationsInput {
   id: ID
-  namespace_name: String!
+  name: String!
 }
 
 type NamespaceEdge {
@@ -312,58 +286,13 @@ type NamespaceEdge {
 enum NamespaceOrderByInput {
   id_ASC
   id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  namespace_name_ASC
-  namespace_name_DESC
+  name_ASC
+  name_DESC
 }
 
 type NamespacePreviousValues {
   id: ID!
-  createdAt: DateTime!
-  namespace_name: String!
-}
-
-input NamespaceScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  namespace_name: String
-  namespace_name_not: String
-  namespace_name_in: [String!]
-  namespace_name_not_in: [String!]
-  namespace_name_lt: String
-  namespace_name_lte: String
-  namespace_name_gt: String
-  namespace_name_gte: String
-  namespace_name_contains: String
-  namespace_name_not_contains: String
-  namespace_name_starts_with: String
-  namespace_name_not_starts_with: String
-  namespace_name_ends_with: String
-  namespace_name_not_ends_with: String
-  AND: [NamespaceScalarWhereInput!]
-  OR: [NamespaceScalarWhereInput!]
-  NOT: [NamespaceScalarWhereInput!]
+  name: String!
 }
 
 type NamespaceSubscriptionPayload {
@@ -384,39 +313,13 @@ input NamespaceSubscriptionWhereInput {
   NOT: [NamespaceSubscriptionWhereInput!]
 }
 
-input NamespaceUpdateDataInput {
-  namespace_name: String
-  translations: TranslationUpdateManyWithoutOwnerInput
-}
-
 input NamespaceUpdateInput {
-  namespace_name: String
+  name: String
   translations: TranslationUpdateManyWithoutOwnerInput
-}
-
-input NamespaceUpdateManyDataInput {
-  namespace_name: String
-}
-
-input NamespaceUpdateManyInput {
-  create: [NamespaceCreateInput!]
-  update: [NamespaceUpdateWithWhereUniqueNestedInput!]
-  upsert: [NamespaceUpsertWithWhereUniqueNestedInput!]
-  delete: [NamespaceWhereUniqueInput!]
-  connect: [NamespaceWhereUniqueInput!]
-  set: [NamespaceWhereUniqueInput!]
-  disconnect: [NamespaceWhereUniqueInput!]
-  deleteMany: [NamespaceScalarWhereInput!]
-  updateMany: [NamespaceUpdateManyWithWhereNestedInput!]
 }
 
 input NamespaceUpdateManyMutationInput {
-  namespace_name: String
-}
-
-input NamespaceUpdateManyWithWhereNestedInput {
-  where: NamespaceScalarWhereInput!
-  data: NamespaceUpdateManyDataInput!
+  name: String
 }
 
 input NamespaceUpdateOneRequiredWithoutTranslationsInput {
@@ -427,23 +330,12 @@ input NamespaceUpdateOneRequiredWithoutTranslationsInput {
 }
 
 input NamespaceUpdateWithoutTranslationsDataInput {
-  namespace_name: String
-}
-
-input NamespaceUpdateWithWhereUniqueNestedInput {
-  where: NamespaceWhereUniqueInput!
-  data: NamespaceUpdateDataInput!
+  name: String
 }
 
 input NamespaceUpsertWithoutTranslationsInput {
   update: NamespaceUpdateWithoutTranslationsDataInput!
   create: NamespaceCreateWithoutTranslationsInput!
-}
-
-input NamespaceUpsertWithWhereUniqueNestedInput {
-  where: NamespaceWhereUniqueInput!
-  update: NamespaceUpdateDataInput!
-  create: NamespaceCreateInput!
 }
 
 input NamespaceWhereInput {
@@ -461,28 +353,20 @@ input NamespaceWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  namespace_name: String
-  namespace_name_not: String
-  namespace_name_in: [String!]
-  namespace_name_not_in: [String!]
-  namespace_name_lt: String
-  namespace_name_lte: String
-  namespace_name_gt: String
-  namespace_name_gte: String
-  namespace_name_contains: String
-  namespace_name_not_contains: String
-  namespace_name_starts_with: String
-  namespace_name_not_starts_with: String
-  namespace_name_ends_with: String
-  namespace_name_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
   translations_every: TranslationWhereInput
   translations_some: TranslationWhereInput
   translations_none: TranslationWhereInput
@@ -493,7 +377,7 @@ input NamespaceWhereInput {
 
 input NamespaceWhereUniqueInput {
   id: ID
-  namespace_name: String
+  name: String
 }
 
 interface Node {
@@ -509,9 +393,9 @@ type PageInfo {
 
 type Project {
   id: ID!
-  createdAt: DateTime!
-  project_name: String!
+  name: String!
   languages(where: LanguageWhereInput, orderBy: LanguageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Language!]
+  user: User!
 }
 
 type ProjectConnection {
@@ -522,13 +406,31 @@ type ProjectConnection {
 
 input ProjectCreateInput {
   id: ID
-  project_name: String!
-  languages: LanguageCreateManyInput
+  name: String!
+  languages: LanguageCreateManyWithoutProjectInput
+  user: UserCreateOneWithoutProjectsInput!
 }
 
-input ProjectCreateManyInput {
-  create: [ProjectCreateInput!]
+input ProjectCreateManyWithoutUserInput {
+  create: [ProjectCreateWithoutUserInput!]
   connect: [ProjectWhereUniqueInput!]
+}
+
+input ProjectCreateOneWithoutLanguagesInput {
+  create: ProjectCreateWithoutLanguagesInput
+  connect: ProjectWhereUniqueInput
+}
+
+input ProjectCreateWithoutLanguagesInput {
+  id: ID
+  name: String!
+  user: UserCreateOneWithoutProjectsInput!
+}
+
+input ProjectCreateWithoutUserInput {
+  id: ID
+  name: String!
+  languages: LanguageCreateManyWithoutProjectInput
 }
 
 type ProjectEdge {
@@ -539,16 +441,13 @@ type ProjectEdge {
 enum ProjectOrderByInput {
   id_ASC
   id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  project_name_ASC
-  project_name_DESC
+  name_ASC
+  name_DESC
 }
 
 type ProjectPreviousValues {
   id: ID!
-  createdAt: DateTime!
-  project_name: String!
+  name: String!
 }
 
 input ProjectScalarWhereInput {
@@ -566,28 +465,20 @@ input ProjectScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  project_name: String
-  project_name_not: String
-  project_name_in: [String!]
-  project_name_not_in: [String!]
-  project_name_lt: String
-  project_name_lte: String
-  project_name_gt: String
-  project_name_gte: String
-  project_name_contains: String
-  project_name_not_contains: String
-  project_name_starts_with: String
-  project_name_not_starts_with: String
-  project_name_ends_with: String
-  project_name_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
   AND: [ProjectScalarWhereInput!]
   OR: [ProjectScalarWhereInput!]
   NOT: [ProjectScalarWhereInput!]
@@ -611,34 +502,30 @@ input ProjectSubscriptionWhereInput {
   NOT: [ProjectSubscriptionWhereInput!]
 }
 
-input ProjectUpdateDataInput {
-  project_name: String
-  languages: LanguageUpdateManyInput
-}
-
 input ProjectUpdateInput {
-  project_name: String
-  languages: LanguageUpdateManyInput
+  name: String
+  languages: LanguageUpdateManyWithoutProjectInput
+  user: UserUpdateOneRequiredWithoutProjectsInput
 }
 
 input ProjectUpdateManyDataInput {
-  project_name: String
+  name: String
 }
 
-input ProjectUpdateManyInput {
-  create: [ProjectCreateInput!]
-  update: [ProjectUpdateWithWhereUniqueNestedInput!]
-  upsert: [ProjectUpsertWithWhereUniqueNestedInput!]
+input ProjectUpdateManyMutationInput {
+  name: String
+}
+
+input ProjectUpdateManyWithoutUserInput {
+  create: [ProjectCreateWithoutUserInput!]
   delete: [ProjectWhereUniqueInput!]
   connect: [ProjectWhereUniqueInput!]
   set: [ProjectWhereUniqueInput!]
   disconnect: [ProjectWhereUniqueInput!]
+  update: [ProjectUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [ProjectUpsertWithWhereUniqueWithoutUserInput!]
   deleteMany: [ProjectScalarWhereInput!]
   updateMany: [ProjectUpdateManyWithWhereNestedInput!]
-}
-
-input ProjectUpdateManyMutationInput {
-  project_name: String
 }
 
 input ProjectUpdateManyWithWhereNestedInput {
@@ -646,15 +533,37 @@ input ProjectUpdateManyWithWhereNestedInput {
   data: ProjectUpdateManyDataInput!
 }
 
-input ProjectUpdateWithWhereUniqueNestedInput {
-  where: ProjectWhereUniqueInput!
-  data: ProjectUpdateDataInput!
+input ProjectUpdateOneRequiredWithoutLanguagesInput {
+  create: ProjectCreateWithoutLanguagesInput
+  update: ProjectUpdateWithoutLanguagesDataInput
+  upsert: ProjectUpsertWithoutLanguagesInput
+  connect: ProjectWhereUniqueInput
 }
 
-input ProjectUpsertWithWhereUniqueNestedInput {
+input ProjectUpdateWithoutLanguagesDataInput {
+  name: String
+  user: UserUpdateOneRequiredWithoutProjectsInput
+}
+
+input ProjectUpdateWithoutUserDataInput {
+  name: String
+  languages: LanguageUpdateManyWithoutProjectInput
+}
+
+input ProjectUpdateWithWhereUniqueWithoutUserInput {
   where: ProjectWhereUniqueInput!
-  update: ProjectUpdateDataInput!
-  create: ProjectCreateInput!
+  data: ProjectUpdateWithoutUserDataInput!
+}
+
+input ProjectUpsertWithoutLanguagesInput {
+  update: ProjectUpdateWithoutLanguagesDataInput!
+  create: ProjectCreateWithoutLanguagesInput!
+}
+
+input ProjectUpsertWithWhereUniqueWithoutUserInput {
+  where: ProjectWhereUniqueInput!
+  update: ProjectUpdateWithoutUserDataInput!
+  create: ProjectCreateWithoutUserInput!
 }
 
 input ProjectWhereInput {
@@ -672,31 +581,24 @@ input ProjectWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  project_name: String
-  project_name_not: String
-  project_name_in: [String!]
-  project_name_not_in: [String!]
-  project_name_lt: String
-  project_name_lte: String
-  project_name_gt: String
-  project_name_gte: String
-  project_name_contains: String
-  project_name_not_contains: String
-  project_name_starts_with: String
-  project_name_not_starts_with: String
-  project_name_ends_with: String
-  project_name_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
   languages_every: LanguageWhereInput
   languages_some: LanguageWhereInput
   languages_none: LanguageWhereInput
+  user: UserWhereInput
   AND: [ProjectWhereInput!]
   OR: [ProjectWhereInput!]
   NOT: [ProjectWhereInput!]
@@ -704,7 +606,7 @@ input ProjectWhereInput {
 
 input ProjectWhereUniqueInput {
   id: ID
-  project_name: String
+  name: String
 }
 
 type Query {
@@ -743,8 +645,6 @@ type Subscription {
 
 type Translation {
   id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
   key: String!
   value: String!
   owner: Namespace!
@@ -785,10 +685,6 @@ type TranslationEdge {
 enum TranslationOrderByInput {
   id_ASC
   id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   key_ASC
   key_DESC
   value_ASC
@@ -799,8 +695,6 @@ enum TranslationOrderByInput {
 
 type TranslationPreviousValues {
   id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
   key: String!
   value: String!
   status: Status!
@@ -821,22 +715,6 @@ input TranslationScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
   key: String
   key_not: String
   key_in: [String!]
@@ -960,22 +838,6 @@ input TranslationWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
   key: String
   key_not: String
   key_in: [String!]
@@ -1021,10 +883,9 @@ input TranslationWhereUniqueInput {
 
 type User {
   id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
   email: String!
-  first_name: String
+  password: String!
+  name: String
   projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project!]
 }
 
@@ -1037,8 +898,21 @@ type UserConnection {
 input UserCreateInput {
   id: ID
   email: String!
-  first_name: String
-  projects: ProjectCreateManyInput
+  password: String!
+  name: String
+  projects: ProjectCreateManyWithoutUserInput
+}
+
+input UserCreateOneWithoutProjectsInput {
+  create: UserCreateWithoutProjectsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutProjectsInput {
+  id: ID
+  email: String!
+  password: String!
+  name: String
 }
 
 type UserEdge {
@@ -1049,22 +923,19 @@ type UserEdge {
 enum UserOrderByInput {
   id_ASC
   id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   email_ASC
   email_DESC
-  first_name_ASC
-  first_name_DESC
+  password_ASC
+  password_DESC
+  name_ASC
+  name_DESC
 }
 
 type UserPreviousValues {
   id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
   email: String!
-  first_name: String
+  password: String!
+  name: String
 }
 
 type UserSubscriptionPayload {
@@ -1087,13 +958,33 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateInput {
   email: String
-  first_name: String
-  projects: ProjectUpdateManyInput
+  password: String
+  name: String
+  projects: ProjectUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
   email: String
-  first_name: String
+  password: String
+  name: String
+}
+
+input UserUpdateOneRequiredWithoutProjectsInput {
+  create: UserCreateWithoutProjectsInput
+  update: UserUpdateWithoutProjectsDataInput
+  upsert: UserUpsertWithoutProjectsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutProjectsDataInput {
+  email: String
+  password: String
+  name: String
+}
+
+input UserUpsertWithoutProjectsInput {
+  update: UserUpdateWithoutProjectsDataInput!
+  create: UserCreateWithoutProjectsInput!
 }
 
 input UserWhereInput {
@@ -1111,22 +1002,6 @@ input UserWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
   email: String
   email_not: String
   email_in: [String!]
@@ -1141,20 +1016,34 @@ input UserWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
-  first_name: String
-  first_name_not: String
-  first_name_in: [String!]
-  first_name_not_in: [String!]
-  first_name_lt: String
-  first_name_lte: String
-  first_name_gt: String
-  first_name_gte: String
-  first_name_contains: String
-  first_name_not_contains: String
-  first_name_starts_with: String
-  first_name_not_starts_with: String
-  first_name_ends_with: String
-  first_name_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
   projects_every: ProjectWhereInput
   projects_some: ProjectWhereInput
   projects_none: ProjectWhereInput

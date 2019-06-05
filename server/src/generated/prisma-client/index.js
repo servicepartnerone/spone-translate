@@ -32,6 +32,6 @@ var models = [
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `https://eu1.prisma.sh/public-flaxprince-27/spone-translate/dev`
+  endpoint: `https://eu1.prisma.sh/spone-translate/sone-translate/dev`
 });
 exports.prisma = new exports.Prisma();

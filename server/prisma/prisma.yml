@@ -1,5 +1,5 @@
 # Specifies the HTTP endpoint of your Prisma API (deployed to a Prisma Demo server).
-endpoint: https://eu1.prisma.sh/public-flaxprince-27/spone-translate/dev
+endpoint: https://eu1.prisma.sh/spone-translate/sone-translate/dev
 
 # Defines your models, each model is mapped to the database as a table.
 datamodel: datamodel.prisma
@@ -9,13 +9,14 @@ generate:
   - generator: javascript-client
     output: ../src/generated/prisma-client
 
+# Seed your service with initial data based on `seed.graphql`.
 seed:
   import: seed.graphql
-# # Ensures Prisma client is re-generated after a datamodel change.
-# hooks:
-#   post-deploy:
-#     - prisma generate
 
+# Ensures Prisma client is re-generated after a datamodel change.
+hooks:
+  post-deploy:
+    - prisma generate
 # If specified, the `secret` must be used to generate a JWT which is attached
 # to the `Authorization` header of HTTP requests made against the Prisma API.
 # Info: https://www.prisma.io/docs/prisma-graphql-api/reference/authentication-ghd4/

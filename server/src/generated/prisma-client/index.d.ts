@@ -261,23 +261,23 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type NamespaceOrderByInput =
+export type LanguageOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "namespace_name_ASC"
-  | "namespace_name_DESC";
+  | "name_ASC"
+  | "name_DESC";
+
+export type ProjectOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC";
 
 export type Status = "ACTIVE" | "DRAFT" | "UPDATED" | "REMOVED";
 
 export type TranslationOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
   | "key_ASC"
   | "key_DESC"
   | "value_ASC"
@@ -285,71 +285,61 @@ export type TranslationOrderByInput =
   | "status_ASC"
   | "status_DESC";
 
-export type LanguageOrderByInput =
+export type NamespaceOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "language_ASC"
-  | "language_DESC";
-
-export type ProjectOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "project_name_ASC"
-  | "project_name_DESC";
+  | "name_ASC"
+  | "name_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC"
   | "email_ASC"
   | "email_DESC"
-  | "first_name_ASC"
-  | "first_name_DESC";
+  | "password_ASC"
+  | "password_DESC"
+  | "name_ASC"
+  | "name_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface TranslationUpdateManyWithWhereNestedInput {
-  where: TranslationScalarWhereInput;
-  data: TranslationUpdateManyDataInput;
+export interface TranslationCreateManyWithoutOwnerInput {
+  create?: Maybe<
+    TranslationCreateWithoutOwnerInput[] | TranslationCreateWithoutOwnerInput
+  >;
+  connect?: Maybe<TranslationWhereUniqueInput[] | TranslationWhereUniqueInput>;
 }
 
 export type LanguageWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
-  language?: Maybe<String>;
+  name?: Maybe<String>;
 }>;
 
-export interface LanguageCreateInput {
+export interface UserCreateOneWithoutProjectsInput {
+  create?: Maybe<UserCreateWithoutProjectsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface ProjectUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
+
+export interface UserCreateWithoutProjectsInput {
   id?: Maybe<ID_Input>;
-  language: String;
-  namespaces?: Maybe<NamespaceCreateManyInput>;
+  email: String;
+  password: String;
+  name?: Maybe<String>;
 }
 
-export interface LanguageUpdateManyWithWhereNestedInput {
-  where: LanguageScalarWhereInput;
-  data: LanguageUpdateManyDataInput;
+export interface TranslationUpdateWithoutOwnerDataInput {
+  key?: Maybe<String>;
+  value?: Maybe<String>;
+  status?: Maybe<Status>;
 }
 
-export interface NamespaceCreateManyInput {
-  create?: Maybe<NamespaceCreateInput[] | NamespaceCreateInput>;
-  connect?: Maybe<NamespaceWhereUniqueInput[] | NamespaceWhereUniqueInput>;
-}
-
-export interface NamespaceUpdateManyWithWhereNestedInput {
-  where: NamespaceScalarWhereInput;
-  data: NamespaceUpdateManyDataInput;
-}
-
-export interface NamespaceCreateInput {
-  id?: Maybe<ID_Input>;
-  namespace_name: String;
-  translations?: Maybe<TranslationCreateManyWithoutOwnerInput>;
+export interface LanguageUpdateInput {
+  name?: Maybe<String>;
+  project?: Maybe<ProjectUpdateOneRequiredWithoutLanguagesInput>;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -363,63 +353,11 @@ export interface UserSubscriptionWhereInput {
   NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
-export interface TranslationCreateManyWithoutOwnerInput {
-  create?: Maybe<
-    TranslationCreateWithoutOwnerInput[] | TranslationCreateWithoutOwnerInput
-  >;
-  connect?: Maybe<TranslationWhereUniqueInput[] | TranslationWhereUniqueInput>;
-}
-
-export interface NamespaceWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  namespace_name?: Maybe<String>;
-  namespace_name_not?: Maybe<String>;
-  namespace_name_in?: Maybe<String[] | String>;
-  namespace_name_not_in?: Maybe<String[] | String>;
-  namespace_name_lt?: Maybe<String>;
-  namespace_name_lte?: Maybe<String>;
-  namespace_name_gt?: Maybe<String>;
-  namespace_name_gte?: Maybe<String>;
-  namespace_name_contains?: Maybe<String>;
-  namespace_name_not_contains?: Maybe<String>;
-  namespace_name_starts_with?: Maybe<String>;
-  namespace_name_not_starts_with?: Maybe<String>;
-  namespace_name_ends_with?: Maybe<String>;
-  namespace_name_not_ends_with?: Maybe<String>;
-  translations_every?: Maybe<TranslationWhereInput>;
-  translations_some?: Maybe<TranslationWhereInput>;
-  translations_none?: Maybe<TranslationWhereInput>;
-  AND?: Maybe<NamespaceWhereInput[] | NamespaceWhereInput>;
-  OR?: Maybe<NamespaceWhereInput[] | NamespaceWhereInput>;
-  NOT?: Maybe<NamespaceWhereInput[] | NamespaceWhereInput>;
-}
-
-export interface TranslationCreateWithoutOwnerInput {
-  id?: Maybe<ID_Input>;
-  key: String;
-  value: String;
-  status?: Maybe<Status>;
+export interface ProjectUpdateOneRequiredWithoutLanguagesInput {
+  create?: Maybe<ProjectCreateWithoutLanguagesInput>;
+  update?: Maybe<ProjectUpdateWithoutLanguagesDataInput>;
+  upsert?: Maybe<ProjectUpsertWithoutLanguagesInput>;
+  connect?: Maybe<ProjectWhereUniqueInput>;
 }
 
 export interface ProjectSubscriptionWhereInput {
@@ -433,9 +371,9 @@ export interface ProjectSubscriptionWhereInput {
   NOT?: Maybe<ProjectSubscriptionWhereInput[] | ProjectSubscriptionWhereInput>;
 }
 
-export interface LanguageUpdateInput {
-  language?: Maybe<String>;
-  namespaces?: Maybe<NamespaceUpdateManyInput>;
+export interface ProjectUpdateWithoutLanguagesDataInput {
+  name?: Maybe<String>;
+  user?: Maybe<UserUpdateOneRequiredWithoutProjectsInput>;
 }
 
 export interface LanguageSubscriptionWhereInput {
@@ -453,35 +391,105 @@ export interface LanguageSubscriptionWhereInput {
   >;
 }
 
-export interface NamespaceUpdateManyInput {
-  create?: Maybe<NamespaceCreateInput[] | NamespaceCreateInput>;
-  update?: Maybe<
-    | NamespaceUpdateWithWhereUniqueNestedInput[]
-    | NamespaceUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | NamespaceUpsertWithWhereUniqueNestedInput[]
-    | NamespaceUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<NamespaceWhereUniqueInput[] | NamespaceWhereUniqueInput>;
-  connect?: Maybe<NamespaceWhereUniqueInput[] | NamespaceWhereUniqueInput>;
-  set?: Maybe<NamespaceWhereUniqueInput[] | NamespaceWhereUniqueInput>;
-  disconnect?: Maybe<NamespaceWhereUniqueInput[] | NamespaceWhereUniqueInput>;
-  deleteMany?: Maybe<NamespaceScalarWhereInput[] | NamespaceScalarWhereInput>;
-  updateMany?: Maybe<
-    | NamespaceUpdateManyWithWhereNestedInput[]
-    | NamespaceUpdateManyWithWhereNestedInput
-  >;
+export interface UserUpdateOneRequiredWithoutProjectsInput {
+  create?: Maybe<UserCreateWithoutProjectsInput>;
+  update?: Maybe<UserUpdateWithoutProjectsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutProjectsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export type NamespaceWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  namespace_name?: Maybe<String>;
-}>;
+export interface UserUpdateManyMutationInput {
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+}
 
-export interface NamespaceUpdateWithWhereUniqueNestedInput {
-  where: NamespaceWhereUniqueInput;
-  data: NamespaceUpdateDataInput;
+export interface UserUpdateWithoutProjectsDataInput {
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+}
+
+export interface NamespaceWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  translations_every?: Maybe<TranslationWhereInput>;
+  translations_some?: Maybe<TranslationWhereInput>;
+  translations_none?: Maybe<TranslationWhereInput>;
+  AND?: Maybe<NamespaceWhereInput[] | NamespaceWhereInput>;
+  OR?: Maybe<NamespaceWhereInput[] | NamespaceWhereInput>;
+  NOT?: Maybe<NamespaceWhereInput[] | NamespaceWhereInput>;
+}
+
+export interface UserUpsertWithoutProjectsInput {
+  update: UserUpdateWithoutProjectsDataInput;
+  create: UserCreateWithoutProjectsInput;
+}
+
+export interface LanguageWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  project?: Maybe<ProjectWhereInput>;
+  AND?: Maybe<LanguageWhereInput[] | LanguageWhereInput>;
+  OR?: Maybe<LanguageWhereInput[] | LanguageWhereInput>;
+  NOT?: Maybe<LanguageWhereInput[] | LanguageWhereInput>;
+}
+
+export interface ProjectUpsertWithoutLanguagesInput {
+  update: ProjectUpdateWithoutLanguagesDataInput;
+  create: ProjectCreateWithoutLanguagesInput;
 }
 
 export interface ProjectUpdateManyWithWhereNestedInput {
@@ -489,15 +497,100 @@ export interface ProjectUpdateManyWithWhereNestedInput {
   data: ProjectUpdateManyDataInput;
 }
 
-export interface NamespaceUpdateDataInput {
-  namespace_name?: Maybe<String>;
-  translations?: Maybe<TranslationUpdateManyWithoutOwnerInput>;
+export interface LanguageUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
+
+export interface ProjectUpsertWithWhereUniqueWithoutUserInput {
+  where: ProjectWhereUniqueInput;
+  update: ProjectUpdateWithoutUserDataInput;
+  create: ProjectCreateWithoutUserInput;
+}
+
+export interface TranslationUpdateInput {
+  key?: Maybe<String>;
+  value?: Maybe<String>;
+  owner?: Maybe<NamespaceUpdateOneRequiredWithoutTranslationsInput>;
+  status?: Maybe<Status>;
 }
 
 export type ProjectWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
-  project_name?: Maybe<String>;
+  name?: Maybe<String>;
 }>;
+
+export interface NamespaceCreateWithoutTranslationsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+}
+
+export interface ProjectUpdateManyWithoutUserInput {
+  create?: Maybe<
+    ProjectCreateWithoutUserInput[] | ProjectCreateWithoutUserInput
+  >;
+  delete?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
+  connect?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
+  set?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
+  disconnect?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
+  update?: Maybe<
+    | ProjectUpdateWithWhereUniqueWithoutUserInput[]
+    | ProjectUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | ProjectUpsertWithWhereUniqueWithoutUserInput[]
+    | ProjectUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<ProjectScalarWhereInput[] | ProjectScalarWhereInput>;
+  updateMany?: Maybe<
+    | ProjectUpdateManyWithWhereNestedInput[]
+    | ProjectUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface NamespaceCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  translations?: Maybe<TranslationCreateManyWithoutOwnerInput>;
+}
+
+export type TranslationWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  key?: Maybe<String>;
+}>;
+
+export interface NamespaceCreateOneWithoutTranslationsInput {
+  create?: Maybe<NamespaceCreateWithoutTranslationsInput>;
+  connect?: Maybe<NamespaceWhereUniqueInput>;
+}
+
+export interface ProjectCreateManyWithoutUserInput {
+  create?: Maybe<
+    ProjectCreateWithoutUserInput[] | ProjectCreateWithoutUserInput
+  >;
+  connect?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
+}
+
+export interface TranslationCreateWithoutOwnerInput {
+  id?: Maybe<ID_Input>;
+  key: String;
+  value: String;
+  status?: Maybe<Status>;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
+
+export interface NamespaceUpdateInput {
+  name?: Maybe<String>;
+  translations?: Maybe<TranslationUpdateManyWithoutOwnerInput>;
+}
+
+export interface NamespaceUpsertWithoutTranslationsInput {
+  update: NamespaceUpdateWithoutTranslationsDataInput;
+  create: NamespaceCreateWithoutTranslationsInput;
+}
 
 export interface TranslationUpdateManyWithoutOwnerInput {
   create?: Maybe<
@@ -526,49 +619,11 @@ export interface TranslationUpdateManyWithoutOwnerInput {
   >;
 }
 
-export interface ProjectWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  project_name?: Maybe<String>;
-  project_name_not?: Maybe<String>;
-  project_name_in?: Maybe<String[] | String>;
-  project_name_not_in?: Maybe<String[] | String>;
-  project_name_lt?: Maybe<String>;
-  project_name_lte?: Maybe<String>;
-  project_name_gt?: Maybe<String>;
-  project_name_gte?: Maybe<String>;
-  project_name_contains?: Maybe<String>;
-  project_name_not_contains?: Maybe<String>;
-  project_name_starts_with?: Maybe<String>;
-  project_name_not_starts_with?: Maybe<String>;
-  project_name_ends_with?: Maybe<String>;
-  project_name_not_ends_with?: Maybe<String>;
-  languages_every?: Maybe<LanguageWhereInput>;
-  languages_some?: Maybe<LanguageWhereInput>;
-  languages_none?: Maybe<LanguageWhereInput>;
-  AND?: Maybe<ProjectWhereInput[] | ProjectWhereInput>;
-  OR?: Maybe<ProjectWhereInput[] | ProjectWhereInput>;
-  NOT?: Maybe<ProjectWhereInput[] | ProjectWhereInput>;
+export interface NamespaceUpdateOneRequiredWithoutTranslationsInput {
+  create?: Maybe<NamespaceCreateWithoutTranslationsInput>;
+  update?: Maybe<NamespaceUpdateWithoutTranslationsDataInput>;
+  upsert?: Maybe<NamespaceUpsertWithoutTranslationsInput>;
+  connect?: Maybe<NamespaceWhereUniqueInput>;
 }
 
 export interface TranslationUpdateWithWhereUniqueWithoutOwnerInput {
@@ -576,21 +631,24 @@ export interface TranslationUpdateWithWhereUniqueWithoutOwnerInput {
   data: TranslationUpdateWithoutOwnerDataInput;
 }
 
-export interface ProjectUpdateWithWhereUniqueNestedInput {
-  where: ProjectWhereUniqueInput;
-  data: ProjectUpdateDataInput;
+export interface LanguageCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  project: ProjectCreateOneWithoutLanguagesInput;
 }
 
-export interface TranslationUpdateWithoutOwnerDataInput {
-  key?: Maybe<String>;
-  value?: Maybe<String>;
+export interface TranslationCreateInput {
+  id?: Maybe<ID_Input>;
+  key: String;
+  value: String;
+  owner: NamespaceCreateOneWithoutTranslationsInput;
   status?: Maybe<Status>;
 }
 
-export interface UserUpdateInput {
-  email?: Maybe<String>;
-  first_name?: Maybe<String>;
-  projects?: Maybe<ProjectUpdateManyInput>;
+export interface ProjectCreateWithoutLanguagesInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  user: UserCreateOneWithoutProjectsInput;
 }
 
 export interface TranslationUpsertWithWhereUniqueWithoutOwnerInput {
@@ -599,9 +657,21 @@ export interface TranslationUpsertWithWhereUniqueWithoutOwnerInput {
   create: TranslationCreateWithoutOwnerInput;
 }
 
-export interface ProjectCreateManyInput {
-  create?: Maybe<ProjectCreateInput[] | ProjectCreateInput>;
-  connect?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
+export interface TranslationSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TranslationWhereInput>;
+  AND?: Maybe<
+    TranslationSubscriptionWhereInput[] | TranslationSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    TranslationSubscriptionWhereInput[] | TranslationSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    TranslationSubscriptionWhereInput[] | TranslationSubscriptionWhereInput
+  >;
 }
 
 export interface TranslationScalarWhereInput {
@@ -619,22 +689,6 @@ export interface TranslationScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
   key?: Maybe<String>;
   key_not?: Maybe<String>;
   key_in?: Maybe<String[] | String>;
@@ -672,318 +726,58 @@ export interface TranslationScalarWhereInput {
   NOT?: Maybe<TranslationScalarWhereInput[] | TranslationScalarWhereInput>;
 }
 
-export interface TranslationUpdateManyMutationInput {
-  key?: Maybe<String>;
-  value?: Maybe<String>;
-  status?: Maybe<Status>;
+export type NamespaceWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  name?: Maybe<String>;
+}>;
+
+export interface TranslationUpdateManyWithWhereNestedInput {
+  where: TranslationScalarWhereInput;
+  data: TranslationUpdateManyDataInput;
 }
 
-export interface NamespaceCreateOneWithoutTranslationsInput {
-  create?: Maybe<NamespaceCreateWithoutTranslationsInput>;
-  connect?: Maybe<NamespaceWhereUniqueInput>;
-}
-
-export interface NamespaceUpsertWithoutTranslationsInput {
-  update: NamespaceUpdateWithoutTranslationsDataInput;
-  create: NamespaceCreateWithoutTranslationsInput;
+export interface ProjectWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  languages_every?: Maybe<LanguageWhereInput>;
+  languages_some?: Maybe<LanguageWhereInput>;
+  languages_none?: Maybe<LanguageWhereInput>;
+  user?: Maybe<UserWhereInput>;
+  AND?: Maybe<ProjectWhereInput[] | ProjectWhereInput>;
+  OR?: Maybe<ProjectWhereInput[] | ProjectWhereInput>;
+  NOT?: Maybe<ProjectWhereInput[] | ProjectWhereInput>;
 }
 
 export interface TranslationUpdateManyDataInput {
   key?: Maybe<String>;
   value?: Maybe<String>;
   status?: Maybe<Status>;
-}
-
-export interface NamespaceUpdateWithoutTranslationsDataInput {
-  namespace_name?: Maybe<String>;
-}
-
-export interface NamespaceUpsertWithWhereUniqueNestedInput {
-  where: NamespaceWhereUniqueInput;
-  update: NamespaceUpdateDataInput;
-  create: NamespaceCreateInput;
-}
-
-export interface TranslationUpdateInput {
-  key?: Maybe<String>;
-  value?: Maybe<String>;
-  owner?: Maybe<NamespaceUpdateOneRequiredWithoutTranslationsInput>;
-  status?: Maybe<Status>;
-}
-
-export interface NamespaceScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  namespace_name?: Maybe<String>;
-  namespace_name_not?: Maybe<String>;
-  namespace_name_in?: Maybe<String[] | String>;
-  namespace_name_not_in?: Maybe<String[] | String>;
-  namespace_name_lt?: Maybe<String>;
-  namespace_name_lte?: Maybe<String>;
-  namespace_name_gt?: Maybe<String>;
-  namespace_name_gte?: Maybe<String>;
-  namespace_name_contains?: Maybe<String>;
-  namespace_name_not_contains?: Maybe<String>;
-  namespace_name_starts_with?: Maybe<String>;
-  namespace_name_not_starts_with?: Maybe<String>;
-  namespace_name_ends_with?: Maybe<String>;
-  namespace_name_not_ends_with?: Maybe<String>;
-  AND?: Maybe<NamespaceScalarWhereInput[] | NamespaceScalarWhereInput>;
-  OR?: Maybe<NamespaceScalarWhereInput[] | NamespaceScalarWhereInput>;
-  NOT?: Maybe<NamespaceScalarWhereInput[] | NamespaceScalarWhereInput>;
-}
-
-export interface LanguageWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  language?: Maybe<String>;
-  language_not?: Maybe<String>;
-  language_in?: Maybe<String[] | String>;
-  language_not_in?: Maybe<String[] | String>;
-  language_lt?: Maybe<String>;
-  language_lte?: Maybe<String>;
-  language_gt?: Maybe<String>;
-  language_gte?: Maybe<String>;
-  language_contains?: Maybe<String>;
-  language_not_contains?: Maybe<String>;
-  language_starts_with?: Maybe<String>;
-  language_not_starts_with?: Maybe<String>;
-  language_ends_with?: Maybe<String>;
-  language_not_ends_with?: Maybe<String>;
-  namespaces_every?: Maybe<NamespaceWhereInput>;
-  namespaces_some?: Maybe<NamespaceWhereInput>;
-  namespaces_none?: Maybe<NamespaceWhereInput>;
-  AND?: Maybe<LanguageWhereInput[] | LanguageWhereInput>;
-  OR?: Maybe<LanguageWhereInput[] | LanguageWhereInput>;
-  NOT?: Maybe<LanguageWhereInput[] | LanguageWhereInput>;
-}
-
-export interface TranslationCreateInput {
-  id?: Maybe<ID_Input>;
-  key: String;
-  value: String;
-  owner: NamespaceCreateOneWithoutTranslationsInput;
-  status?: Maybe<Status>;
-}
-
-export interface NamespaceSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<NamespaceWhereInput>;
-  AND?: Maybe<
-    NamespaceSubscriptionWhereInput[] | NamespaceSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    NamespaceSubscriptionWhereInput[] | NamespaceSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    NamespaceSubscriptionWhereInput[] | NamespaceSubscriptionWhereInput
-  >;
-}
-
-export interface NamespaceUpdateManyDataInput {
-  namespace_name?: Maybe<String>;
-}
-
-export interface ProjectUpdateManyDataInput {
-  project_name?: Maybe<String>;
-}
-
-export interface LanguageUpdateManyMutationInput {
-  language?: Maybe<String>;
-}
-
-export interface ProjectUpsertWithWhereUniqueNestedInput {
-  where: ProjectWhereUniqueInput;
-  update: ProjectUpdateDataInput;
-  create: ProjectCreateInput;
-}
-
-export interface ProjectUpdateManyMutationInput {
-  project_name?: Maybe<String>;
-}
-
-export interface ProjectUpdateManyInput {
-  create?: Maybe<ProjectCreateInput[] | ProjectCreateInput>;
-  update?: Maybe<
-    | ProjectUpdateWithWhereUniqueNestedInput[]
-    | ProjectUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | ProjectUpsertWithWhereUniqueNestedInput[]
-    | ProjectUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
-  connect?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
-  set?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
-  disconnect?: Maybe<ProjectWhereUniqueInput[] | ProjectWhereUniqueInput>;
-  deleteMany?: Maybe<ProjectScalarWhereInput[] | ProjectScalarWhereInput>;
-  updateMany?: Maybe<
-    | ProjectUpdateManyWithWhereNestedInput[]
-    | ProjectUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface LanguageUpdateManyDataInput {
-  language?: Maybe<String>;
-}
-
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  first_name?: Maybe<String>;
-  projects?: Maybe<ProjectCreateManyInput>;
-}
-
-export interface NamespaceUpdateInput {
-  namespace_name?: Maybe<String>;
-  translations?: Maybe<TranslationUpdateManyWithoutOwnerInput>;
-}
-
-export interface UserWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  email?: Maybe<String>;
-  email_not?: Maybe<String>;
-  email_in?: Maybe<String[] | String>;
-  email_not_in?: Maybe<String[] | String>;
-  email_lt?: Maybe<String>;
-  email_lte?: Maybe<String>;
-  email_gt?: Maybe<String>;
-  email_gte?: Maybe<String>;
-  email_contains?: Maybe<String>;
-  email_not_contains?: Maybe<String>;
-  email_starts_with?: Maybe<String>;
-  email_not_starts_with?: Maybe<String>;
-  email_ends_with?: Maybe<String>;
-  email_not_ends_with?: Maybe<String>;
-  first_name?: Maybe<String>;
-  first_name_not?: Maybe<String>;
-  first_name_in?: Maybe<String[] | String>;
-  first_name_not_in?: Maybe<String[] | String>;
-  first_name_lt?: Maybe<String>;
-  first_name_lte?: Maybe<String>;
-  first_name_gt?: Maybe<String>;
-  first_name_gte?: Maybe<String>;
-  first_name_contains?: Maybe<String>;
-  first_name_not_contains?: Maybe<String>;
-  first_name_starts_with?: Maybe<String>;
-  first_name_not_starts_with?: Maybe<String>;
-  first_name_ends_with?: Maybe<String>;
-  first_name_not_ends_with?: Maybe<String>;
-  projects_every?: Maybe<ProjectWhereInput>;
-  projects_some?: Maybe<ProjectWhereInput>;
-  projects_none?: Maybe<ProjectWhereInput>;
-  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
-  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
-  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
-}
-
-export interface NamespaceUpdateManyMutationInput {
-  namespace_name?: Maybe<String>;
-}
-
-export interface NamespaceCreateWithoutTranslationsInput {
-  id?: Maybe<ID_Input>;
-  namespace_name: String;
-}
-
-export interface ProjectCreateInput {
-  id?: Maybe<ID_Input>;
-  project_name: String;
-  languages?: Maybe<LanguageCreateManyInput>;
-}
-
-export interface TranslationSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<TranslationWhereInput>;
-  AND?: Maybe<
-    TranslationSubscriptionWhereInput[] | TranslationSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    TranslationSubscriptionWhereInput[] | TranslationSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    TranslationSubscriptionWhereInput[] | TranslationSubscriptionWhereInput
-  >;
-}
-
-export interface LanguageCreateManyInput {
-  create?: Maybe<LanguageCreateInput[] | LanguageCreateInput>;
-  connect?: Maybe<LanguageWhereUniqueInput[] | LanguageWhereUniqueInput>;
 }
 
 export interface ProjectScalarWhereInput {
@@ -1001,72 +795,66 @@ export interface ProjectScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  project_name?: Maybe<String>;
-  project_name_not?: Maybe<String>;
-  project_name_in?: Maybe<String[] | String>;
-  project_name_not_in?: Maybe<String[] | String>;
-  project_name_lt?: Maybe<String>;
-  project_name_lte?: Maybe<String>;
-  project_name_gt?: Maybe<String>;
-  project_name_gte?: Maybe<String>;
-  project_name_contains?: Maybe<String>;
-  project_name_not_contains?: Maybe<String>;
-  project_name_starts_with?: Maybe<String>;
-  project_name_not_starts_with?: Maybe<String>;
-  project_name_ends_with?: Maybe<String>;
-  project_name_not_ends_with?: Maybe<String>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
   AND?: Maybe<ProjectScalarWhereInput[] | ProjectScalarWhereInput>;
   OR?: Maybe<ProjectScalarWhereInput[] | ProjectScalarWhereInput>;
   NOT?: Maybe<ProjectScalarWhereInput[] | ProjectScalarWhereInput>;
 }
 
-export interface ProjectUpdateInput {
-  project_name?: Maybe<String>;
-  languages?: Maybe<LanguageUpdateManyInput>;
+export interface NamespaceUpdateManyMutationInput {
+  name?: Maybe<String>;
 }
 
-export type TranslationWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  key?: Maybe<String>;
-}>;
+export interface ProjectUpdateWithWhereUniqueWithoutUserInput {
+  where: ProjectWhereUniqueInput;
+  data: ProjectUpdateWithoutUserDataInput;
+}
 
-export interface LanguageUpdateManyInput {
-  create?: Maybe<LanguageCreateInput[] | LanguageCreateInput>;
-  update?: Maybe<
-    | LanguageUpdateWithWhereUniqueNestedInput[]
-    | LanguageUpdateWithWhereUniqueNestedInput
+export interface ProjectCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  languages?: Maybe<LanguageCreateManyWithoutProjectInput>;
+  user: UserCreateOneWithoutProjectsInput;
+}
+
+export interface ProjectCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  languages?: Maybe<LanguageCreateManyWithoutProjectInput>;
+}
+
+export interface LanguageCreateManyWithoutProjectInput {
+  create?: Maybe<
+    LanguageCreateWithoutProjectInput[] | LanguageCreateWithoutProjectInput
   >;
-  upsert?: Maybe<
-    | LanguageUpsertWithWhereUniqueNestedInput[]
-    | LanguageUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<LanguageWhereUniqueInput[] | LanguageWhereUniqueInput>;
   connect?: Maybe<LanguageWhereUniqueInput[] | LanguageWhereUniqueInput>;
-  set?: Maybe<LanguageWhereUniqueInput[] | LanguageWhereUniqueInput>;
-  disconnect?: Maybe<LanguageWhereUniqueInput[] | LanguageWhereUniqueInput>;
-  deleteMany?: Maybe<LanguageScalarWhereInput[] | LanguageScalarWhereInput>;
-  updateMany?: Maybe<
-    | LanguageUpdateManyWithWhereNestedInput[]
-    | LanguageUpdateManyWithWhereNestedInput
-  >;
 }
 
-export interface NamespaceUpdateOneRequiredWithoutTranslationsInput {
-  create?: Maybe<NamespaceCreateWithoutTranslationsInput>;
-  update?: Maybe<NamespaceUpdateWithoutTranslationsDataInput>;
-  upsert?: Maybe<NamespaceUpsertWithoutTranslationsInput>;
-  connect?: Maybe<NamespaceWhereUniqueInput>;
+export interface TranslationUpdateManyMutationInput {
+  key?: Maybe<String>;
+  value?: Maybe<String>;
+  status?: Maybe<Status>;
 }
 
-export interface LanguageScalarWhereInput {
+export interface LanguageCreateWithoutProjectInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+}
+
+export interface UserWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -1081,47 +869,60 @@ export interface LanguageScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  language?: Maybe<String>;
-  language_not?: Maybe<String>;
-  language_in?: Maybe<String[] | String>;
-  language_not_in?: Maybe<String[] | String>;
-  language_lt?: Maybe<String>;
-  language_lte?: Maybe<String>;
-  language_gt?: Maybe<String>;
-  language_gte?: Maybe<String>;
-  language_contains?: Maybe<String>;
-  language_not_contains?: Maybe<String>;
-  language_starts_with?: Maybe<String>;
-  language_not_starts_with?: Maybe<String>;
-  language_ends_with?: Maybe<String>;
-  language_not_ends_with?: Maybe<String>;
-  AND?: Maybe<LanguageScalarWhereInput[] | LanguageScalarWhereInput>;
-  OR?: Maybe<LanguageScalarWhereInput[] | LanguageScalarWhereInput>;
-  NOT?: Maybe<LanguageScalarWhereInput[] | LanguageScalarWhereInput>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  projects_every?: Maybe<ProjectWhereInput>;
+  projects_some?: Maybe<ProjectWhereInput>;
+  projects_none?: Maybe<ProjectWhereInput>;
+  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
+  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
+  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export interface LanguageUpsertWithWhereUniqueNestedInput {
-  where: LanguageWhereUniqueInput;
-  update: LanguageUpdateDataInput;
-  create: LanguageCreateInput;
-}
-
-export interface LanguageUpdateDataInput {
-  language?: Maybe<String>;
-  namespaces?: Maybe<NamespaceUpdateManyInput>;
-}
-
-export interface LanguageUpdateWithWhereUniqueNestedInput {
-  where: LanguageWhereUniqueInput;
-  data: LanguageUpdateDataInput;
+export interface ProjectUpdateInput {
+  name?: Maybe<String>;
+  languages?: Maybe<LanguageUpdateManyWithoutProjectInput>;
+  user?: Maybe<UserUpdateOneRequiredWithoutProjectsInput>;
 }
 
 export interface TranslationWhereInput {
@@ -1139,22 +940,6 @@ export interface TranslationWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
   key?: Maybe<String>;
   key_not?: Maybe<String>;
   key_in?: Maybe<String[] | String>;
@@ -1193,19 +978,135 @@ export interface TranslationWhereInput {
   NOT?: Maybe<TranslationWhereInput[] | TranslationWhereInput>;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
-}>;
-
-export interface ProjectUpdateDataInput {
-  project_name?: Maybe<String>;
-  languages?: Maybe<LanguageUpdateManyInput>;
+export interface LanguageUpdateManyWithoutProjectInput {
+  create?: Maybe<
+    LanguageCreateWithoutProjectInput[] | LanguageCreateWithoutProjectInput
+  >;
+  delete?: Maybe<LanguageWhereUniqueInput[] | LanguageWhereUniqueInput>;
+  connect?: Maybe<LanguageWhereUniqueInput[] | LanguageWhereUniqueInput>;
+  set?: Maybe<LanguageWhereUniqueInput[] | LanguageWhereUniqueInput>;
+  disconnect?: Maybe<LanguageWhereUniqueInput[] | LanguageWhereUniqueInput>;
+  update?: Maybe<
+    | LanguageUpdateWithWhereUniqueWithoutProjectInput[]
+    | LanguageUpdateWithWhereUniqueWithoutProjectInput
+  >;
+  upsert?: Maybe<
+    | LanguageUpsertWithWhereUniqueWithoutProjectInput[]
+    | LanguageUpsertWithWhereUniqueWithoutProjectInput
+  >;
+  deleteMany?: Maybe<LanguageScalarWhereInput[] | LanguageScalarWhereInput>;
+  updateMany?: Maybe<
+    | LanguageUpdateManyWithWhereNestedInput[]
+    | LanguageUpdateManyWithWhereNestedInput
+  >;
 }
 
-export interface UserUpdateManyMutationInput {
+export interface ProjectUpdateWithoutUserDataInput {
+  name?: Maybe<String>;
+  languages?: Maybe<LanguageUpdateManyWithoutProjectInput>;
+}
+
+export interface LanguageUpdateWithWhereUniqueWithoutProjectInput {
+  where: LanguageWhereUniqueInput;
+  data: LanguageUpdateWithoutProjectDataInput;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  email: String;
+  password: String;
+  name?: Maybe<String>;
+  projects?: Maybe<ProjectCreateManyWithoutUserInput>;
+}
+
+export interface LanguageUpdateWithoutProjectDataInput {
+  name?: Maybe<String>;
+}
+
+export interface ProjectCreateOneWithoutLanguagesInput {
+  create?: Maybe<ProjectCreateWithoutLanguagesInput>;
+  connect?: Maybe<ProjectWhereUniqueInput>;
+}
+
+export interface LanguageUpdateManyDataInput {
+  name?: Maybe<String>;
+}
+
+export interface LanguageUpdateManyWithWhereNestedInput {
+  where: LanguageScalarWhereInput;
+  data: LanguageUpdateManyDataInput;
+}
+
+export interface LanguageScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  AND?: Maybe<LanguageScalarWhereInput[] | LanguageScalarWhereInput>;
+  OR?: Maybe<LanguageScalarWhereInput[] | LanguageScalarWhereInput>;
+  NOT?: Maybe<LanguageScalarWhereInput[] | LanguageScalarWhereInput>;
+}
+
+export interface LanguageUpsertWithWhereUniqueWithoutProjectInput {
+  where: LanguageWhereUniqueInput;
+  update: LanguageUpdateWithoutProjectDataInput;
+  create: LanguageCreateWithoutProjectInput;
+}
+
+export interface NamespaceSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<NamespaceWhereInput>;
+  AND?: Maybe<
+    NamespaceSubscriptionWhereInput[] | NamespaceSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    NamespaceSubscriptionWhereInput[] | NamespaceSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    NamespaceSubscriptionWhereInput[] | NamespaceSubscriptionWhereInput
+  >;
+}
+
+export interface NamespaceUpdateWithoutTranslationsDataInput {
+  name?: Maybe<String>;
+}
+
+export interface UserUpdateInput {
   email?: Maybe<String>;
-  first_name?: Maybe<String>;
+  password?: Maybe<String>;
+  name?: Maybe<String>;
+  projects?: Maybe<ProjectUpdateManyWithoutUserInput>;
+}
+
+export interface ProjectUpdateManyDataInput {
+  name?: Maybe<String>;
 }
 
 export interface NodeNode {
@@ -1214,42 +1115,131 @@ export interface NodeNode {
 
 export interface UserPreviousValues {
   id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
   email: String;
-  first_name?: String;
+  password: String;
+  name?: String;
 }
 
 export interface UserPreviousValuesPromise
   extends Promise<UserPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
   email: () => Promise<String>;
-  first_name: () => Promise<String>;
+  password: () => Promise<String>;
+  name: () => Promise<String>;
 }
 
 export interface UserPreviousValuesSubscription
   extends Promise<AsyncIterator<UserPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   email: () => Promise<AsyncIterator<String>>;
-  first_name: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
+export interface Translation {
+  id: ID_Output;
+  key: String;
+  value: String;
+  status: Status;
+}
+
+export interface TranslationPromise extends Promise<Translation>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  key: () => Promise<String>;
+  value: () => Promise<String>;
+  owner: <T = NamespacePromise>() => T;
+  status: () => Promise<Status>;
+}
+
+export interface TranslationSubscription
+  extends Promise<AsyncIterator<Translation>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  key: () => Promise<AsyncIterator<String>>;
+  value: () => Promise<AsyncIterator<String>>;
+  owner: <T = NamespaceSubscription>() => T;
+  status: () => Promise<AsyncIterator<Status>>;
+}
+
+export interface TranslationNullablePromise
+  extends Promise<Translation | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  key: () => Promise<String>;
+  value: () => Promise<String>;
+  owner: <T = NamespacePromise>() => T;
+  status: () => Promise<Status>;
+}
+
+export interface User {
+  id: ID_Output;
+  email: String;
+  password: String;
+  name?: String;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  name: () => Promise<String>;
+  projects: <T = FragmentableArray<Project>>(args?: {
+    where?: ProjectWhereInput;
+    orderBy?: ProjectOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+  projects: <T = Promise<AsyncIterator<ProjectSubscription>>>(args?: {
+    where?: ProjectWhereInput;
+    orderBy?: ProjectOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserNullablePromise
+  extends Promise<User | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  name: () => Promise<String>;
+  projects: <T = FragmentableArray<Project>>(args?: {
+    where?: ProjectWhereInput;
+    orderBy?: ProjectOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface Project {
   id: ID_Output;
-  createdAt: DateTimeOutput;
-  project_name: String;
+  name: String;
 }
 
 export interface ProjectPromise extends Promise<Project>, Fragmentable {
   id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  project_name: () => Promise<String>;
+  name: () => Promise<String>;
   languages: <T = FragmentableArray<Language>>(args?: {
     where?: LanguageWhereInput;
     orderBy?: LanguageOrderByInput;
@@ -1259,14 +1249,14 @@ export interface ProjectPromise extends Promise<Project>, Fragmentable {
     first?: Int;
     last?: Int;
   }) => T;
+  user: <T = UserPromise>() => T;
 }
 
 export interface ProjectSubscription
   extends Promise<AsyncIterator<Project>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  project_name: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
   languages: <T = Promise<AsyncIterator<LanguageSubscription>>>(args?: {
     where?: LanguageWhereInput;
     orderBy?: LanguageOrderByInput;
@@ -1276,14 +1266,14 @@ export interface ProjectSubscription
     first?: Int;
     last?: Int;
   }) => T;
+  user: <T = UserSubscription>() => T;
 }
 
 export interface ProjectNullablePromise
   extends Promise<Project | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  project_name: () => Promise<String>;
+  name: () => Promise<String>;
   languages: <T = FragmentableArray<Language>>(args?: {
     where?: LanguageWhereInput;
     orderBy?: LanguageOrderByInput;
@@ -1293,78 +1283,32 @@ export interface ProjectNullablePromise
     first?: Int;
     last?: Int;
   }) => T;
+  user: <T = UserPromise>() => T;
 }
 
-export interface LanguageConnection {
-  pageInfo: PageInfo;
-  edges: LanguageEdge[];
+export interface TranslationSubscriptionPayload {
+  mutation: MutationType;
+  node: Translation;
+  updatedFields: String[];
+  previousValues: TranslationPreviousValues;
 }
 
-export interface LanguageConnectionPromise
-  extends Promise<LanguageConnection>,
+export interface TranslationSubscriptionPayloadPromise
+  extends Promise<TranslationSubscriptionPayload>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<LanguageEdge>>() => T;
-  aggregate: <T = AggregateLanguagePromise>() => T;
+  mutation: () => Promise<MutationType>;
+  node: <T = TranslationPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TranslationPreviousValuesPromise>() => T;
 }
 
-export interface LanguageConnectionSubscription
-  extends Promise<AsyncIterator<LanguageConnection>>,
+export interface TranslationSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TranslationSubscriptionPayload>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<LanguageEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateLanguageSubscription>() => T;
-}
-
-export interface AggregateNamespace {
-  count: Int;
-}
-
-export interface AggregateNamespacePromise
-  extends Promise<AggregateNamespace>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateNamespaceSubscription
-  extends Promise<AsyncIterator<AggregateNamespace>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface NamespaceEdge {
-  node: Namespace;
-  cursor: String;
-}
-
-export interface NamespaceEdgePromise
-  extends Promise<NamespaceEdge>,
-    Fragmentable {
-  node: <T = NamespacePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface NamespaceEdgeSubscription
-  extends Promise<AsyncIterator<NamespaceEdge>>,
-    Fragmentable {
-  node: <T = NamespaceSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TranslationSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TranslationPreviousValuesSubscription>() => T;
 }
 
 export interface UserSubscriptionPayload {
@@ -1392,25 +1336,71 @@ export interface UserSubscriptionPayloadSubscription
   previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
-export interface NamespaceConnection {
-  pageInfo: PageInfo;
-  edges: NamespaceEdge[];
+export interface Namespace {
+  id: ID_Output;
+  name: String;
 }
 
-export interface NamespaceConnectionPromise
-  extends Promise<NamespaceConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<NamespaceEdge>>() => T;
-  aggregate: <T = AggregateNamespacePromise>() => T;
+export interface NamespacePromise extends Promise<Namespace>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  translations: <T = FragmentableArray<Translation>>(args?: {
+    where?: TranslationWhereInput;
+    orderBy?: TranslationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
-export interface NamespaceConnectionSubscription
-  extends Promise<AsyncIterator<NamespaceConnection>>,
+export interface NamespaceSubscription
+  extends Promise<AsyncIterator<Namespace>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<NamespaceEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateNamespaceSubscription>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  translations: <T = Promise<AsyncIterator<TranslationSubscription>>>(args?: {
+    where?: TranslationWhereInput;
+    orderBy?: TranslationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface NamespaceNullablePromise
+  extends Promise<Namespace | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  translations: <T = FragmentableArray<Translation>>(args?: {
+    where?: TranslationWhereInput;
+    orderBy?: TranslationOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
 }
 
 export interface UserEdge {
@@ -1448,144 +1438,69 @@ export interface AggregateLanguageSubscription
 
 export interface Language {
   id: ID_Output;
-  createdAt: DateTimeOutput;
-  language: String;
+  name: String;
 }
 
 export interface LanguagePromise extends Promise<Language>, Fragmentable {
   id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  language: () => Promise<String>;
-  namespaces: <T = FragmentableArray<Namespace>>(args?: {
-    where?: NamespaceWhereInput;
-    orderBy?: NamespaceOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  name: () => Promise<String>;
+  project: <T = ProjectPromise>() => T;
 }
 
 export interface LanguageSubscription
   extends Promise<AsyncIterator<Language>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  language: () => Promise<AsyncIterator<String>>;
-  namespaces: <T = Promise<AsyncIterator<NamespaceSubscription>>>(args?: {
-    where?: NamespaceWhereInput;
-    orderBy?: NamespaceOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  name: () => Promise<AsyncIterator<String>>;
+  project: <T = ProjectSubscription>() => T;
 }
 
 export interface LanguageNullablePromise
   extends Promise<Language | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  language: () => Promise<String>;
-  namespaces: <T = FragmentableArray<Namespace>>(args?: {
-    where?: NamespaceWhereInput;
-    orderBy?: NamespaceOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  name: () => Promise<String>;
+  project: <T = ProjectPromise>() => T;
 }
 
-export interface LanguageEdge {
-  node: Language;
+export interface LanguageConnection {
+  pageInfo: PageInfo;
+  edges: LanguageEdge[];
+}
+
+export interface LanguageConnectionPromise
+  extends Promise<LanguageConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<LanguageEdge>>() => T;
+  aggregate: <T = AggregateLanguagePromise>() => T;
+}
+
+export interface LanguageConnectionSubscription
+  extends Promise<AsyncIterator<LanguageConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<LanguageEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateLanguageSubscription>() => T;
+}
+
+export interface TranslationEdge {
+  node: Translation;
   cursor: String;
 }
 
-export interface LanguageEdgePromise
-  extends Promise<LanguageEdge>,
+export interface TranslationEdgePromise
+  extends Promise<TranslationEdge>,
     Fragmentable {
-  node: <T = LanguagePromise>() => T;
+  node: <T = TranslationPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface LanguageEdgeSubscription
-  extends Promise<AsyncIterator<LanguageEdge>>,
+export interface TranslationEdgeSubscription
+  extends Promise<AsyncIterator<TranslationEdge>>,
     Fragmentable {
-  node: <T = LanguageSubscription>() => T;
+  node: <T = TranslationSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateTranslation {
-  count: Int;
-}
-
-export interface AggregateTranslationPromise
-  extends Promise<AggregateTranslation>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateTranslationSubscription
-  extends Promise<AsyncIterator<AggregateTranslation>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface TranslationPreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  key: String;
-  value: String;
-  status: Status;
-}
-
-export interface TranslationPreviousValuesPromise
-  extends Promise<TranslationPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  key: () => Promise<String>;
-  value: () => Promise<String>;
-  status: () => Promise<Status>;
-}
-
-export interface TranslationPreviousValuesSubscription
-  extends Promise<AsyncIterator<TranslationPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  key: () => Promise<AsyncIterator<String>>;
-  value: () => Promise<AsyncIterator<String>>;
-  status: () => Promise<AsyncIterator<Status>>;
-}
-
-export interface TranslationConnection {
-  pageInfo: PageInfo;
-  edges: TranslationEdge[];
-}
-
-export interface TranslationConnectionPromise
-  extends Promise<TranslationConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<TranslationEdge>>() => T;
-  aggregate: <T = AggregateTranslationPromise>() => T;
-}
-
-export interface TranslationConnectionSubscription
-  extends Promise<AsyncIterator<TranslationConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<TranslationEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateTranslationSubscription>() => T;
 }
 
 export interface LanguageSubscriptionPayload {
@@ -1613,127 +1528,98 @@ export interface LanguageSubscriptionPayloadSubscription
   previousValues: <T = LanguagePreviousValuesSubscription>() => T;
 }
 
-export interface ProjectEdge {
-  node: Project;
-  cursor: String;
+export interface AggregateProject {
+  count: Int;
 }
 
-export interface ProjectEdgePromise extends Promise<ProjectEdge>, Fragmentable {
-  node: <T = ProjectPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface ProjectEdgeSubscription
-  extends Promise<AsyncIterator<ProjectEdge>>,
+export interface AggregateProjectPromise
+  extends Promise<AggregateProject>,
     Fragmentable {
-  node: <T = ProjectSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<Int>;
+}
+
+export interface AggregateProjectSubscription
+  extends Promise<AsyncIterator<AggregateProject>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface LanguagePreviousValues {
   id: ID_Output;
-  createdAt: DateTimeOutput;
-  language: String;
+  name: String;
 }
 
 export interface LanguagePreviousValuesPromise
   extends Promise<LanguagePreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  language: () => Promise<String>;
+  name: () => Promise<String>;
 }
 
 export interface LanguagePreviousValuesSubscription
   extends Promise<AsyncIterator<LanguagePreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  language: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
 }
 
-export interface Translation {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  key: String;
-  value: String;
-  status: Status;
+export interface ProjectConnection {
+  pageInfo: PageInfo;
+  edges: ProjectEdge[];
 }
 
-export interface TranslationPromise extends Promise<Translation>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  key: () => Promise<String>;
-  value: () => Promise<String>;
-  owner: <T = NamespacePromise>() => T;
-  status: () => Promise<Status>;
-}
-
-export interface TranslationSubscription
-  extends Promise<AsyncIterator<Translation>>,
+export interface ProjectConnectionPromise
+  extends Promise<ProjectConnection>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  key: () => Promise<AsyncIterator<String>>;
-  value: () => Promise<AsyncIterator<String>>;
-  owner: <T = NamespaceSubscription>() => T;
-  status: () => Promise<AsyncIterator<Status>>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ProjectEdge>>() => T;
+  aggregate: <T = AggregateProjectPromise>() => T;
 }
 
-export interface TranslationNullablePromise
-  extends Promise<Translation | null>,
+export interface ProjectConnectionSubscription
+  extends Promise<AsyncIterator<ProjectConnection>>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  key: () => Promise<String>;
-  value: () => Promise<String>;
-  owner: <T = NamespacePromise>() => T;
-  status: () => Promise<Status>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ProjectEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateProjectSubscription>() => T;
 }
 
-export interface TranslationSubscriptionPayload {
-  mutation: MutationType;
-  node: Translation;
-  updatedFields: String[];
-  previousValues: TranslationPreviousValues;
+export interface LanguageEdge {
+  node: Language;
+  cursor: String;
 }
 
-export interface TranslationSubscriptionPayloadPromise
-  extends Promise<TranslationSubscriptionPayload>,
+export interface LanguageEdgePromise
+  extends Promise<LanguageEdge>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = TranslationPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = TranslationPreviousValuesPromise>() => T;
+  node: <T = LanguagePromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface TranslationSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<TranslationSubscriptionPayload>>,
+export interface LanguageEdgeSubscription
+  extends Promise<AsyncIterator<LanguageEdge>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = TranslationSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = TranslationPreviousValuesSubscription>() => T;
+  node: <T = LanguageSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateUser {
-  count: Int;
+export interface NamespaceEdge {
+  node: Namespace;
+  cursor: String;
 }
 
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
+export interface NamespaceEdgePromise
+  extends Promise<NamespaceEdge>,
     Fragmentable {
-  count: () => Promise<Int>;
+  node: <T = NamespacePromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
+export interface NamespaceEdgeSubscription
+  extends Promise<AsyncIterator<NamespaceEdge>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  node: <T = NamespaceSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface NamespaceSubscriptionPayload {
@@ -1761,105 +1647,114 @@ export interface NamespaceSubscriptionPayloadSubscription
   previousValues: <T = NamespacePreviousValuesSubscription>() => T;
 }
 
-export interface User {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  email: String;
-  first_name?: String;
-}
-
-export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  email: () => Promise<String>;
-  first_name: () => Promise<String>;
-  projects: <T = FragmentableArray<Project>>(args?: {
-    where?: ProjectWhereInput;
-    orderBy?: ProjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  email: () => Promise<AsyncIterator<String>>;
-  first_name: () => Promise<AsyncIterator<String>>;
-  projects: <T = Promise<AsyncIterator<ProjectSubscription>>>(args?: {
-    where?: ProjectWhereInput;
-    orderBy?: ProjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface UserNullablePromise
-  extends Promise<User | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  email: () => Promise<String>;
-  first_name: () => Promise<String>;
-  projects: <T = FragmentableArray<Project>>(args?: {
-    where?: ProjectWhereInput;
-    orderBy?: ProjectOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface AggregateProject {
+export interface AggregateUser {
   count: Int;
 }
 
-export interface AggregateProjectPromise
-  extends Promise<AggregateProject>,
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateProjectSubscription
-  extends Promise<AsyncIterator<AggregateProject>>,
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface NamespacePreviousValues {
+  id: ID_Output;
+  name: String;
+}
+
+export interface NamespacePreviousValuesPromise
+  extends Promise<NamespacePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface NamespacePreviousValuesSubscription
+  extends Promise<AsyncIterator<NamespacePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateTranslation {
+  count: Int;
+}
+
+export interface AggregateTranslationPromise
+  extends Promise<AggregateTranslation>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTranslationSubscription
+  extends Promise<AsyncIterator<AggregateTranslation>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ProjectEdge {
+  node: Project;
+  cursor: String;
+}
+
+export interface ProjectEdgePromise extends Promise<ProjectEdge>, Fragmentable {
+  node: <T = ProjectPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ProjectEdgeSubscription
+  extends Promise<AsyncIterator<ProjectEdge>>,
+    Fragmentable {
+  node: <T = ProjectSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
 export interface ProjectPreviousValues {
   id: ID_Output;
-  createdAt: DateTimeOutput;
-  project_name: String;
+  name: String;
 }
 
 export interface ProjectPreviousValuesPromise
   extends Promise<ProjectPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  project_name: () => Promise<String>;
+  name: () => Promise<String>;
 }
 
 export interface ProjectPreviousValuesSubscription
   extends Promise<AsyncIterator<ProjectPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  project_name: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
 }
 
 export interface ProjectSubscriptionPayload {
@@ -1887,89 +1782,66 @@ export interface ProjectSubscriptionPayloadSubscription
   previousValues: <T = ProjectPreviousValuesSubscription>() => T;
 }
 
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface NamespacePreviousValues {
+export interface TranslationPreviousValues {
   id: ID_Output;
-  createdAt: DateTimeOutput;
-  namespace_name: String;
+  key: String;
+  value: String;
+  status: Status;
 }
 
-export interface NamespacePreviousValuesPromise
-  extends Promise<NamespacePreviousValues>,
+export interface TranslationPreviousValuesPromise
+  extends Promise<TranslationPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  namespace_name: () => Promise<String>;
+  key: () => Promise<String>;
+  value: () => Promise<String>;
+  status: () => Promise<Status>;
 }
 
-export interface NamespacePreviousValuesSubscription
-  extends Promise<AsyncIterator<NamespacePreviousValues>>,
+export interface TranslationPreviousValuesSubscription
+  extends Promise<AsyncIterator<TranslationPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  namespace_name: () => Promise<AsyncIterator<String>>;
+  key: () => Promise<AsyncIterator<String>>;
+  value: () => Promise<AsyncIterator<String>>;
+  status: () => Promise<AsyncIterator<Status>>;
 }
 
-export interface ProjectConnection {
+export interface AggregateNamespace {
+  count: Int;
+}
+
+export interface AggregateNamespacePromise
+  extends Promise<AggregateNamespace>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateNamespaceSubscription
+  extends Promise<AsyncIterator<AggregateNamespace>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface TranslationConnection {
   pageInfo: PageInfo;
-  edges: ProjectEdge[];
+  edges: TranslationEdge[];
 }
 
-export interface ProjectConnectionPromise
-  extends Promise<ProjectConnection>,
+export interface TranslationConnectionPromise
+  extends Promise<TranslationConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ProjectEdge>>() => T;
-  aggregate: <T = AggregateProjectPromise>() => T;
+  edges: <T = FragmentableArray<TranslationEdge>>() => T;
+  aggregate: <T = AggregateTranslationPromise>() => T;
 }
 
-export interface ProjectConnectionSubscription
-  extends Promise<AsyncIterator<ProjectConnection>>,
+export interface TranslationConnectionSubscription
+  extends Promise<AsyncIterator<TranslationConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ProjectEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateProjectSubscription>() => T;
-}
-
-export interface TranslationEdge {
-  node: Translation;
-  cursor: String;
-}
-
-export interface TranslationEdgePromise
-  extends Promise<TranslationEdge>,
-    Fragmentable {
-  node: <T = TranslationPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface TranslationEdgeSubscription
-  extends Promise<AsyncIterator<TranslationEdge>>,
-    Fragmentable {
-  node: <T = TranslationSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  edges: <T = Promise<AsyncIterator<TranslationEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTranslationSubscription>() => T;
 }
 
 export interface UserConnection {
@@ -1993,59 +1865,25 @@ export interface UserConnectionSubscription
   aggregate: <T = AggregateUserSubscription>() => T;
 }
 
-export interface Namespace {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  namespace_name: String;
+export interface NamespaceConnection {
+  pageInfo: PageInfo;
+  edges: NamespaceEdge[];
 }
 
-export interface NamespacePromise extends Promise<Namespace>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  namespace_name: () => Promise<String>;
-  translations: <T = FragmentableArray<Translation>>(args?: {
-    where?: TranslationWhereInput;
-    orderBy?: TranslationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface NamespaceSubscription
-  extends Promise<AsyncIterator<Namespace>>,
+export interface NamespaceConnectionPromise
+  extends Promise<NamespaceConnection>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  namespace_name: () => Promise<AsyncIterator<String>>;
-  translations: <T = Promise<AsyncIterator<TranslationSubscription>>>(args?: {
-    where?: TranslationWhereInput;
-    orderBy?: TranslationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<NamespaceEdge>>() => T;
+  aggregate: <T = AggregateNamespacePromise>() => T;
 }
 
-export interface NamespaceNullablePromise
-  extends Promise<Namespace | null>,
+export interface NamespaceConnectionSubscription
+  extends Promise<AsyncIterator<NamespaceConnection>>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  namespace_name: () => Promise<String>;
-  translations: <T = FragmentableArray<Translation>>(args?: {
-    where?: TranslationWhereInput;
-    orderBy?: TranslationOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<NamespaceEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateNamespaceSubscription>() => T;
 }
 
 /*
@@ -2060,16 +1898,6 @@ The `ID` scalar type represents a unique identifier, often used to refetch an ob
 */
 export type ID_Input = string | number;
 export type ID_Output = string;
-
-/*
-DateTime scalar input type, allowing Date
-*/
-export type DateTimeInput = Date | string;
-
-/*
-DateTime scalar output type, which is always a string
-*/
-export type DateTimeOutput = string;
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.

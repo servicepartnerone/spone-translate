@@ -1,53 +1,58 @@
 type Query {
   users: [User!]!
+  user(id: String!): User
   projects: [Project!]!
-
-  user(id: ID!): User
-  project(id: ID!): Project
+  project(id: String!): Project
+  languages: [Language!]!
+  language(id: String!): Language
+  namespaces: [Namespace!]!
+  userSettings: User
 }
 
 type Mutation {
-  createUser(email: String, first_name: String!): User!
-  createProject(project_name: String!): Project!
-  createLanguage(language: String!): Language!
-  createNamespace(namespace_name: String!): Namespace!
+  signup(email: String!, password: String!, name: String): AuthPayload!
+  login(email: String!, password: String!): AuthPayload!
+  createProject(name: String!): Project!
+  createLanguage(name: String!, project: String!): Language!
+  createNamespace(name: String!): Namespace!
   createTranslation(key: String!, value: String!): Translation!
+  deleteUser(id: String!): User!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
 }
 
 type User {
   id: ID!
-  createdAt: Date!
-  updatedAt: Date!
   email: String!
-  first_name: String
+  name: String
+  password: String!
   projects: [Project!]!
 }
 
 type Project {
   id: ID!
-  createdAt: Date!
-  project_name: String!
+  name: String!
   languages: [Language!]!
+  user: User!
 }
 
 type Language {
   id: ID!
-  createdAt: Date!
-  language: String!
-  namespaces: [Namespace!]!
+  name: String!
+  project: Project!
 }
 
 type Namespace {
   id: ID!
-  createdAt: Date!
-  namespace_name: String!
+  name: String!
   translations: [Translation!]!
 }
 
 type Translation {
   id: ID!
-  createdAt: Date!
-  updatedAt: Date!
   key: String!
   value: String!
   owner: Namespace!

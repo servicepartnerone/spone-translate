@@ -1,37 +1,32 @@
 type User {
   id: ID! @id
-  createdAt: DateTime! @createdAt
-  updatedAt: DateTime! @updatedAt
   email: String! @unique
-  first_name: String
+  password: String!
+  name: String
   projects: [Project!]!
 }
 
 type Project {
   id: ID! @id
-  createdAt: DateTime! @createdAt
-  project_name: String! @unique
+  name: String! @unique
   languages: [Language!]!
+  user: User!
 }
 
 type Language {
   id: ID! @id
-  createdAt: DateTime! @createdAt
-  language: String! @unique
-  namespaces: [Namespace!]!
+  name: String! @unique
+  project: Project! @relation(link: INLINE)
 }
 
 type Namespace {
   id: ID! @id
-  createdAt: DateTime! @createdAt
-  namespace_name: String! @unique
+  name: String! @unique
   translations: [Translation!]!
 }
 
 type Translation {
   id: ID! @id
-  createdAt: DateTime! @createdAt
-  updatedAt: DateTime! @updatedAt
   key: String! @unique
   value: String!
   owner: Namespace! @relation(link: INLINE)
