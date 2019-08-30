@@ -13,7 +13,7 @@
     "subscriptions-transport-ws": "^0.9.16"
   },
   "dependencies": {
-    "@spone/ui": "https://05b0b920e16499b46987a67c4e4fdcfc5cd7b583@github.com/servicepartnerone/spone-ui",
+    "@spone/ui": "git://github.com/servicepartnerone/spone-ui.git",
     "apollo-boost": "^0.4.0",
     "apollo-cache-inmemory": "^1.6.0",
     "apollo-client": "^2.6.0",
@@ -27,9 +27,9 @@
     "graphql": "14.2.1",
     "lodash.get": "^4.4.2",
     "node-sass": "^4.12.0",
-    "react": "16.8.6",
+    "react": "16.9.0",
     "react-apollo": "2.5.5",
-    "react-dom": "16.8.6",
+    "react-dom": "16.9.0",
     "react-modal": "3.8.1",
     "react-router-dom": "5.0.0",
     "react-toastify": "^5.1.0",
